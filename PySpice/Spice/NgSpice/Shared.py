@@ -618,7 +618,7 @@ class NgSpiceShared:
         prefix, _, content = message.partition(' ')
         if prefix == 'stderr':
             self._stderr.append(content)
-            if content.startswith(('Using SPARSE', 'Using KLU')):
+            if content.startswith(('Note:', 'Using SPARSE', 'Using KLU')):
                 func = self._logger.info
             elif content.startswith('Warning:'):
                 func = self._logger.warning
@@ -627,7 +627,7 @@ class NgSpiceShared:
                 self._error_in_stderr = True
                 # Non-standard convergence trials are reported to stderr
                 # but can complete successfully
-                completed = ("completed" in content) or ("finished" in content)
+                completed = "finished" in content
                 if content.startswith("Note:") and completed:
                     self._error_in_stderr = False
 
